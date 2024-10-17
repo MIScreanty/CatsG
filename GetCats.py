@@ -14,9 +14,15 @@ def get_cat(url):
 def get_new_cat():
     img = get_cat(url)
     if img:
-        t_m.config(image=img)
+        new_win = Toplevel()
+        t_m = Label(new_win, image=img)
         t_m.image = img
+        t_m.pack()
+        #t_m.config(image=img)
+        #t_m.image = img
 
+def close_window():
+    window.destroy()
 
 window = Tk()
 window.title("Caats")
@@ -25,10 +31,22 @@ window.iconbitmap("cat_icon_138789.ico")
 
 url = "https://cataas.com/cat"
 
-t_m = Label(window)
-t_m.pack()
+#исправим код чтобы получать котов в новом окне
+#t_m = Label(window)
+#t_m.pack()
 
-btn = Button(window, text="Get new cat", command=get_new_cat)
-btn.pack()
+#сделаем меню вместо кнопки
+#btn = Button(window, text="Get new cat", command=get_new_cat)
+#btn.pack()
+
+#Создаем меню
+main_menu = Menu(window)
+window.config(menu=main_menu)
+file_menu = Menu(main_menu, tearoff=0)
+
+main_menu.add_cascade(label="File", menu=file_menu)
+file_menu.add_command(label="Get cat", command=get_new_cat)
+file_menu.add_separator()
+file_menu.add_command(label="Exit", command=close_window)
 
 window.mainloop()
